@@ -31,17 +31,17 @@ class Advertisement(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     title = sq.Column(sq.String(64), nullable=False, unique=True)
     description = sq.Column(sq.String(256), nullable=False)
-    create_date = sq.Column(sq.Date, default=datetime.date.today())
+    create_date = sq.Column(sq.DateTime, default=datetime.date.today())
     owner = sq.Column(sq.String(64), nullable=False)
 
     @property
     def json(self):
         return {
             'id': self.id,
-            'Заголовок': self.title,
-            'Описание': self.description,
-            'Дата создания': self.create_date,
-            'Владелец': self.owner
+            'title': self.title,
+            'description': self.description,
+            'create_date': int(self.create_date.timestamp()),
+            'owner': self.owner
         }
 
 

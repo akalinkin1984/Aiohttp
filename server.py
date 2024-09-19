@@ -37,14 +37,14 @@ def get_http_error(error_cls, msg: str | dict | list):
         text=json.dumps(
             {'error': msg},
         ),
-        context_type='application/json'
+        content_type='application/json'
     )
 
 
 async def get_adv(adv_id: int, session: AsyncAttrs) -> Advertisement:
     adv = await session.get(Advertisement, adv_id)
     if adv is None:
-        raise get_http_error(web.HTTPNotFound, 'Объявление не найдено')
+        raise get_http_error(web.HTTPNotFound, 'The advertisement not found')
     return adv
 
 
@@ -53,7 +53,7 @@ async def add_adv(adv: Advertisement, session: AsyncAttrs) -> Advertisement:
     try:
         await session.commit()
     except IntegrityError:
-        raise get_http_error(web.HTTPConflict, 'Объявление уже существует')
+        raise get_http_error(web.HTTPConflict, 'The advertisement already exists')
     return adv
 
 
@@ -84,7 +84,7 @@ class AdvView(web.View):
         adv_data = validate_json(await self.request.json(), CreateAdv)
         adv = Advertisement(**adv_data)
         adv = await add_adv(adv, self.session)
-        return web.json_response({'status': 'Объявление размещено', 'id': adv.id})
+        return web.json_response({'status': 'The advertisement is posted', 'id': adv.id})
 
     async def patch(self):
         adv_data = validate_json(await self.request.json(), UpdateAdv)
@@ -92,13 +92,13 @@ class AdvView(web.View):
         for field, value in adv_data.items():
             setattr(adv, field, value)
         adv = await add_adv(adv, self.session)
-        return web.json_response(adv.json)
+        return web.json_response({'status': 'The advertisement is update', 'id': adv.id})
 
     async def delete(self):
         adv = await get_adv(self.adv_id, self.session)
         await self.session.delete(adv)
         await self.session.commit()
-        return web.json_response({'status': 'Удалено'})
+        return web.json_response({'status': 'The advertisement is deleted'})
 
 
 app.add_routes([

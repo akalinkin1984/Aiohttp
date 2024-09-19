@@ -5,25 +5,25 @@ import aiohttp
 async def main():
     async with aiohttp.ClientSession() as session:
         response = await session.post(
-            'http://0.0.0.0:8080/adv',
-            json={'title': 'Холодильник',
-                  'description': 'Отличный холодильник',
-                  'owner': 'Иван'}
+            'http://127.0.0.1:8080/adv/',
+            json={'title': 'Telephone',
+                  'description': 'Iphone',
+                  'owner': 'Vasya'}
         )
 
         # response = await session.get(
-        #     'http://0.0.0.0:8080/adv/56',
+        #     'http://127.0.0.1:8080/adv/1/',
         # )
 
         # response = await session.patch(
-        #     'http://0.0.0.0:8080/adv/6',
-        #     json = {'title': 'Телевизор',
-        #             'description': 'Хороший телевизор',
+        #     'http://127.0.0.1:8080/adv/1/',
+        #     json = {'title899': 'New Telephone',
+        #             'description111': 'New Iphone',
         #             }
         # )
 
         # response = await session.delete(
-        #     'http://0.0.0.0:8080/adv/3',
+        #     'http://127.0.0.1:8080/adv/1/',
         # )
 
         print(response.status)
@@ -31,15 +31,3 @@ async def main():
 
 
 asyncio.run(main())
-
-# import requests
-#
-#
-# response = requests.post(
-#     'http://0.0.0.0:8080/adv',
-#     json = {'title': 'Холодильник',
-#             'description': 'Отличный холодильник',
-#             'owner': 'Иван'},)
-#
-# print(response.status_code)
-# print(response.json())
