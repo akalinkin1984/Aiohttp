@@ -10,4 +10,4 @@ COPY ./requirements.txt /tmp/requirements.txt
 
 RUN pip install -r /tmp/requirements.txt
 
-CMD ["python", "app/server.py"]
+ENTRYPOINT ["python", "app/server.py"]
