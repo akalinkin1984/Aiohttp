@@ -1,47 +1,24 @@
 version: "3.9"
 services:
-  my_pg:
+  postgres:
     image: postgres:latest
     environment:
-      POSTGRES_DB: "my_db"
+      POSTGRES_DB: "db_aiohttp"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
-    networks:
-      - data
     ports:
       - "5432:5432"
 
-  dj_app:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - my_pg
+      - postgres
     restart: always
     volumes:
-      - ./stocks_products:/app
+      - ./app:/app
     env_file:
-      - ./config/_env
-    networks:
-      - data
-      - backend
+      - ./_env
     expose:
       - 8080
-
-  nginx:
-    image: nginx:latest
-    volumes:
-      - ./config/nginx.conf:/etc/nginx/nginx.conf
-      - ./config/default.conf:/etc/nginx/conf.d/default.conf
-      - ./stocks_products:/app
-      - ./config/proxy_params.conf:/etc/nginx/proxy_params
-    depends_on:
-      - dj_app
-    networks:
-      - backend
-    ports:
-      - 80:80
-
-networks:
-  data:
-  backend:
