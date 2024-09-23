@@ -8,7 +8,7 @@ async def main():
             'http://127.0.0.1:8080/adv/',
             json={'title': 'Telephone',
                   'description': 'Iphone',
-                  'owner': 'Vasya'}
+                  'owner': 'Petya'}
         )
 
         # response = await session.get(

@@ -1,5 +1,0 @@
-PG_USER=postgres
-PG_PASSWORD=postgres
-PG_NAME=db_aiohttp
-PG_HOST=postgres
-PG_PORT=5432
